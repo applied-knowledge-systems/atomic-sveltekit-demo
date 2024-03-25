@@ -2,7 +2,8 @@
 // import adapter from '@sveltejs/adapter-static';
 // import adapterGhpages from "svelte-adapter-ghpages";
 // import adapterNetlify from '@sveltejs/adapter-netlify';
-import adapter from '@sveltejs/adapter-cloudflare';
+// import adapter from '@sveltejs/adapter-cloudflare';
+import adapter from '@sveltejs/adapter-static';
 
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
@@ -20,16 +21,27 @@ const config = {
 		// 	precompress: false,
 		// 	strict: true
 		// }),
-
+		// for netlify
 		// adapter: adapterNetlify({
 		// 	// Using edge is faster, but does not support node stuff
 		// 	// edge: true,
 		// }),
+		// for cloudflare
+		// adapter: adapter({
+		// 	routes: {
+		// 		include: ['/*'],
+		// 		exclude: ['<all>']
+		// 	}
+		// }),
+		// for static
 		adapter: adapter({
-			routes: {
-				include: ['/*'],
-				exclude: ['<all>']
-			}
+			// default options are shown. On some platforms
+			// these options are set automatically — see below
+			pages: 'build',
+			assets: 'build',
+			fallback: '404.html',
+			precompress: false,
+			strict: true
 		}),
 		prerender: {
 			crawl: true,
